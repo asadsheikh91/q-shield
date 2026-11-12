@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+results_log.txt
+.pytest_cache/
+results/quick/
