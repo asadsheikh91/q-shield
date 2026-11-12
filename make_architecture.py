@@ -56,10 +56,10 @@ box(36, 42, 30, 13.5, "Constrained QUBO", "min Σ D_i(1−x_i) + Σ W_ij(1−x_i
 # 3 quantum
 group(71, 22, 50, 54, "3  QUANTUM CORE  (Qiskit)", PAL["q"][1])
 box(73, 59, 22, 13, "Dicke state", "|D(n,K)⟩: all plans that\ntreat exactly K fields\n(Bärtschi–Eidenbenz)", "q", fs=8.0)
-box(97, 59, 22, 13, "Cost layer", "e^{−iγ H_C}\nRZ + RZZ gates\n(Ising form of QUBO)", "q", fs=8.0)
-box(97, 42, 22, 13.5, "XY ring mixer", "e^{−iβ(XX+YY)/2}\nconserves Σx = K\n→ 100 % feasible", "q", fs=8.0)
+box(97, 59, 22, 13, "Cost layer", "exp(−iγ·H_C)\nRZ + RZZ gates\n(Ising form of QUBO)", "q", fs=8.0)
+box(97, 42, 22, 13.5, "XY ring mixer", "exp(−iβ·H_XY)\nconserves Σx = K\n→ 100 % feasible", "q", fs=8.0)
 box(73, 42, 22, 13.5, "Measure", "Aer sampler\n(ideal + noisy)\nbitstrings = plans", "q", fs=8.0)
-box(73, 24, 46, 14, "Classical outer loop", "COBYLA on ⟨H_C⟩ (statevector), p=1 grid seed,\nINTERP warm-start for p → p+1 layers", "cl")
+box(73, 24, 46, 14, "Classical outer loop", "COBYLA minimises ⟨H_C⟩ or CVaR₀.₂ (best 20% of outcomes);\np = 1 grid seed, INTERP warm-start for p → p+1", "cl")
 ax.text(109.5, 57.2, "× p layers", fontsize=8, color=PAL["q"][1], weight="bold")
 
 # 4 validation
@@ -79,15 +79,14 @@ for y in (63, 45):
 arrow((31.5, 27), (35.5, 60), rad=-0.15)
 arrow((31.5, 11), (35.5, 46), rad=-0.2)
 arrow((51, 57.5), (51, 56))
-arrow((66.5, 48), (72.5, 64), "H_C, K", rad=-0.2, lx=-2, ly=2)
+arrow((66.5, 48), (72.5, 64), "H_C, K", rad=-0.2, lx=4.5, ly=-3)
 arrow((95.4, 65.5), (96.6, 65.5))
 arrow((108, 58.6), (108, 56))
 arrow((96.6, 48.5), (95.4, 48.5))
 arrow((84, 41.6), (84, 38.4), "⟨H_C⟩", lx=4)
 arrow((112, 38.4), (112, 41.6), "γ, β", lx=4)
-arrow((119.5, 46), (125.5, 46), "plan", rad=0.0, lx=0, ly=1.2, color=PAL["val"][1])
+arrow((119.5, 46), (125.5, 46), "compare", rad=0.0, lx=0, ly=1.2, color=PAL["val"][1])
 arrow((84, 23.6), (60, 16.6), "decoded plan", color=PAL["out"][1], rad=0.1)
-arrow((136, 41.6), (128, 16.6), "certify / compare", color=PAL["val"][1], rad=0.0, lx=7)
 
 fig.savefig(os.path.join(OUT, "architecture.png"), bbox_inches="tight", dpi=170)
 print("saved", os.path.join(OUT, "architecture.png"))
