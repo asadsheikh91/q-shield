@@ -1,5 +1,7 @@
 # Q-SHIELD: quantum-assisted, network-aware Fall Armyworm containment
 
+**Report:** [Q-SHIELD_Report.docx](Q-SHIELD_Report.docx) · **Video pitch:** _link coming_
+
 **Qiskit Fall Fest 2026 Hackathon · Domain 4: Agriculture**
 
 A village spray team can treat only **K** of **n** infested maize fields before Fall Armyworm larvae become uncontrollable. Which fields should it treat?
