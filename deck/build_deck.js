@@ -7,7 +7,7 @@ const pptxgen = require("pptxgenjs");
 const ROOT = path.resolve(__dirname, "..");
 const S = JSON.parse(fs.readFileSync(path.join(ROOT, "results", "summary.json"), "utf8"));
 const SKILL_THEME = process.env.APPLY_THEME_JS;            // path to the pptx skill's apply_theme.js (optional)
-const OUT = path.join(ROOT, "Q-SHIELD_Pitch.pptx");
+const OUT = process.env.DECK_OUT || path.join(ROOT, "Q-SHIELD_Pitch.pptx");
 const IMG = (f) => path.join(__dirname, f);
 
 // ------------------------------------------------------------------ numbers
@@ -121,8 +121,7 @@ text(s, "Network-aware Fall Armyworm containment with a constraint-preserving QA
   { x: M, y: 4.55, w: 6.4, h: 0.8, fontSize: 16, color: "C9D1CC" });
 text(s, "github.com/asadsheikh91/q-shield", { x: M, y: 6.55, w: 6, h: 0.35, fontSize: 13, color: "C9D1CC" });
 s.addNotes(
-  "This is Q-SHIELD. It answers a question farmer cooperatives face every outbreak season: " +
-  "which fields do you spray when you can't spray them all?");
+  "Q-SHIELD. One question, every outbreak season: which fields do you spray when you cannot spray them all?");
 
 // ================================================================== 2. PROBLEM
 pres.addSection({ title: "Problem" });
@@ -151,9 +150,8 @@ text(s, [
   { text: " infested fields while the larvae are still young enough to kill. Which fields go first?", options: {} },
 ], { x: M + 0.45, y: 5.15, w: W - 2 * M - 0.9, h: 1.1, fontSize: 22, color: C.text1, valign: "top" });
 s.addNotes(
-  "The pest is Fall Armyworm, costing African agriculture up to 9.4 billion dollars a year. Sprays only work on " +
-  "young larvae, so a village team gets a few days and a handful of fields. And the moths fly 20 to 40 kilometres " +
-  "a night, so fields keep re-infesting each other.");
+  "Fall Armyworm costs African agriculture up to 9.4 billion dollars a year. Sprays only work on young larvae. " +
+  "A village team can treat a few fields, in a few days. And the moths fly up to 40 kilometres a night.");
 
 // ================================================================== 3. INSIGHT (MAPS)
 pres.addSection({ title: "Insight" });
@@ -183,9 +181,8 @@ s.addImage({ path: IMG("legend_infestation.png"), x: M, y: 6.55, w: 2.0, h: 0.2 
 text(s, "low → high scouted infestation  ·  line width = re-infestation risk", { x: M + 2.15, y: 6.5, w: 6.0, h: 0.3,
   fontSize: 10, color: C.accent4 });
 s.addNotes(
-  "Today's rule is: spray the worst fields first. The grey lines are re-infestation risk. Our plan makes one swap: " +
-  "skip F9, on the edge of the outbreak, and treat F4, the bridge between the hotspot and the healthy fields. Same four sprays, " +
-  fmt(cutPct, 0) + " percent less expected loss, certified against all 495 possible plans.");
+  "Today's rule: spray the worst fields first. Our plan makes one swap. Skip F9. Treat F4, the bridge between the " +
+  "hotspot and the healthy fields. Same four sprays. " + fmt(cutPct, 0) + " percent less loss. Proven optimal against all 495 plans.");
 
 // ================================================================== 4. FORMULATION
 pres.addSection({ title: "Method" });
@@ -226,9 +223,8 @@ text(s, [
   { text: "4,096 bitstrings, but only 495 are valid plans", options: { fontSize: 14, color: C.accent4 } },
 ], { x: mx + 0.3, y: 5.55, w: W - M - mx - 0.6, h: 0.9, color: C.text1, valign: "middle" });
 s.addNotes(
-  "One qubit per field. We minimise direct loss, plus spread between untreated neighbours, plus chemical load. " +
-  "The spread term multiplies two decisions, so each spread link becomes a ZZ coupling: a natural QUBO. " +
-  "The budget, exactly K sprays, is a hard constraint.");
+  "One qubit per field. The objective: direct loss, re-infestation between untreated neighbours, and chemical load. " +
+  "Re-infestation multiplies two decisions, so every spread link becomes a ZZ coupling. A natural QUBO.");
 
 // ================================================================== 5. QUANTUM CIRCUIT
 s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Method" });
@@ -272,9 +268,8 @@ text(s, [
   { text: "No penalty weight to tune, no shots wasted on impossible plans. Dicke circuit (Bärtschi & Eidenbenz 2019) implemented from scratch and unit-tested.", options: { color: C.text1 } },
 ], { x: M, y: 5.65, w: W - 2 * M, h: 0.9, fontSize: 15, valign: "top" });
 s.addNotes(
-  "So we build the constraint into the circuit. We start in a Dicke state: every plan with exactly K sprays, in " +
-  "superposition. Each layer applies the cost, then an XY mixer that only moves a spray between fields, so every " +
-  "shot is valid. We train on CVaR, the best twenty percent of outcomes, because a farmer needs one excellent plan.");
+  "The spray budget is built into the circuit. A Dicke state holds every plan with exactly K sprays. The XY mixer " +
+  "moves sprays; it never adds one. Every shot is a valid plan. We train on CVaR: the best twenty percent of outcomes.");
 
 // ================================================================== 6. RESULTS
 pres.addSection({ title: "Results" });
@@ -300,10 +295,9 @@ stat(s, sx, 3.15, sw, qs.optimal_shots + " / " + qs.shots, "Aer shots were the c
 text(s, "Penalty QAOA finds the optimum no more often than random guessing. Transpiled circuit: " + qs.cx +
   " CX gates, depth " + qs.transpiled_depth + ".", { x: sx, y: 5.15, w: sw, h: 1.3, fontSize: 13, color: C.accent4, valign: "top" });
 s.addNotes(
-  "On Qiskit Aer, textbook penalty QAOA wastes " + fmt(100 * (1 - last(pen).p_feasible), 0) + " percent of its " +
-  "shots on impossible plans and finds the optimum no better than chance. Ours is 100 percent feasible, and the " +
-  "optimal plan comes out in " + qs.optimal_shots + " of " + qs.shots + " shots: " +
-  fmt(last(cv).amplification, 0) + " times more often than random.");
+  "Textbook penalty QAOA wastes " + fmt(100 * (1 - last(pen).p_feasible), 0) + " percent of its shots and does no " +
+  "better than chance. Ours: 100 percent valid. The optimal plan in " + qs.optimal_shots + " of " + qs.shots + " shots. " +
+  fmt(last(cv).amplification, 0) + " times better than random.");
 
 // ================================================================== 7. ROBUSTNESS + PARETO
 s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Results" });
@@ -326,9 +320,8 @@ stat(s, sx, 3.55, sw, exactVillages + " / 12", "villages where QAOA's best of 1,
 text(s, "QAOA matched the exact optimum at every budget tested (K = 2 to 6).", { x: sx, y: 5.55, w: sw, h: 0.8,
   fontSize: 13, color: C.accent4, valign: "top" });
 s.addNotes(
-  "Across 12 random villages, spraying the worst first loses " + fmt(bs.greedy_gap_pct.mean, 1) + " percent more " +
-  "on average, up to " + fmt(bs.greedy_gap_pct.max, 0) + ", and our best sample is exactly optimal in " +
-  exactVillages + " of 12. And across spray budgets, QAOA matched the exact optimum every time.");
+  "Across 12 villages, spraying the worst first loses up to " + fmt(bs.greedy_gap_pct.max, 0) + " percent. Our best " +
+  "sample is optimal in " + exactVillages + " of 12, and at every spray budget we tested.");
 
 // ================================================================== 8. HONEST LIMITS
 pres.addSection({ title: "Limits" });
@@ -358,9 +351,8 @@ const lx = 7.75, lw = W - M - lx - 0.85;
     text(s, d, { x: lx + 0.85, y: y + 0.45, w: lw, h: 1.05, fontSize: 14, color: C.text1, valign: "top" });
   });
 s.addNotes(
-  "Honestly: at 12 fields classical search is instant, so we claim no speed-up. Hardware noise breaks the " +
-  "feasibility guarantee. With post-selection the signal survives up to 0.3 percent error, and it's gone by 1 " +
-  "percent. The spread model is literature-calibrated, not yet fitted to field data.");
+  "The limits. No speed-up at 12 fields; classical search is instant. Hardware noise erodes the guarantee beyond " +
+  "0.3 percent error. And the spread model still awaits field data.");
 
 // ================================================================== 9. CLOSE
 pres.addSection({ title: "Close" });
@@ -383,8 +375,7 @@ text(s, [
 text(s, "github.com/asadsheikh91/q-shield", { x: M, y: 6.55, w: 6, h: 0.35, fontSize: 15, bold: true,
   color: C.accent6, hyperlink: { url: "https://github.com/asadsheikh91/q-shield" } });
 s.addNotes(
-  "Q-SHIELD: a real farming decision, a constraint-native quantum formulation, fully reproducible in Qiskit. " +
-  "Code and report are on GitHub. Thank you.");
+  "Q-SHIELD. A real farming decision. A constraint-native quantum formulation. Fully reproducible. Thank you.");
 
 // ------------------------------------------------------------------ write
 (async () => {

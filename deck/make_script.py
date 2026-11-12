@@ -1,10 +1,11 @@
 """Regenerates PITCH_SCRIPT.md from the speaker notes in Q-SHIELD_Pitch.pptx (run from repo root)."""
 from pptx import Presentation
 
-p = Presentation("Q-SHIELD_Pitch.pptx")
+import os
+p = Presentation(os.environ.get("DECK_OUT", "Q-SHIELD_Pitch.pptx"))
 titles = ["Title", "The problem", "The insight", "Formulation", "Quantum circuit", "Results", "Robustness",
           "Honest limits", "Close"]
-WPM = 150
+WPM = 130          # a calm, clear recording pace
 rows, total, t = [], 0, 0.0
 for i, (sl, name) in enumerate(zip(p.slides, titles), 1):
     note = sl.notes_slide.notes_text_frame.text.strip()

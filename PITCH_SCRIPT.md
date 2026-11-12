@@ -1,20 +1,20 @@
 # Q-SHIELD: 3-minute video script
 
-This is the same text as the speaker notes in `Q-SHIELD_Pitch.pptx`: 380 words, about **2:45** at 150 words per minute.
+This is the same text as the speaker notes in `Q-SHIELD_Pitch.pptx`: 269 words, about **2:17** at 130 words per minute.
 
 **How to record:** open the deck in PowerPoint, then go to Slide Show → Record → *Record from Beginning*. Read the notes (they appear in the teleprompter view) and press → to advance. Afterwards use File → Export → Create a Video (1080p), and check that it runs under 3:00. Upload it to Google Drive and set sharing to *Anyone with the link → Viewer*.
 
 | # | Slide | Time | Say |
 |---|---|---|---|
-| 1 | Title | 0:00–0:11 | This is Q-SHIELD. It answers a question farmer cooperatives face every outbreak season: which fields do you spray when you can't spray them all? |
-| 2 | The problem | 0:11–0:32 | The pest is Fall Armyworm, costing African agriculture up to 9.4 billion dollars a year. Sprays only work on young larvae, so a village team gets a few days and a handful of fields. And the moths fly 20 to 40 kilometres a night, so fields keep re-infesting each other. |
-| 3 | The insight | 0:32–0:55 | Today's rule is: spray the worst fields first. The grey lines are re-infestation risk. Our plan makes one swap: skip F9, on the edge of the outbreak, and treat F4, the bridge between the hotspot and the healthy fields. Same four sprays, 16 percent less expected loss, certified against all 495 possible plans. |
-| 4 | Formulation | 0:55–1:13 | One qubit per field. We minimise direct loss, plus spread between untreated neighbours, plus chemical load. The spread term multiplies two decisions, so each spread link becomes a ZZ coupling: a natural QUBO. The budget, exactly K sprays, is a hard constraint. |
-| 5 | Quantum circuit | 1:13–1:39 | So we build the constraint into the circuit. We start in a Dicke state: every plan with exactly K sprays, in superposition. Each layer applies the cost, then an XY mixer that only moves a spray between fields, so every shot is valid. We train on CVaR, the best twenty percent of outcomes, because a farmer needs one excellent plan. |
-| 6 | Results | 1:39–1:58 | On Qiskit Aer, textbook penalty QAOA wastes 28 percent of its shots on impossible plans and finds the optimum no better than chance. Ours is 100 percent feasible, and the optimal plan comes out in 505 of 4096 shots: 60 times more often than random. |
-| 7 | Robustness | 1:58–2:15 | Across 12 random villages, spraying the worst first loses 7.6 percent more on average, up to 19, and our best sample is exactly optimal in 11 of 12. And across spray budgets, QAOA matched the exact optimum every time. |
-| 8 | Honest limits | 2:15–2:35 | Honestly: at 12 fields classical search is instant, so we claim no speed-up. Hardware noise breaks the feasibility guarantee. With post-selection the signal survives up to 0.3 percent error, and it's gone by 1 percent. The spread model is literature-calibrated, not yet fitted to field data. |
-| 9 | Close | 2:35–2:45 | Q-SHIELD: a real farming decision, a constraint-native quantum formulation, fully reproducible in Qiskit. Code and report are on GitHub. Thank you. |
+| 1 | Title | 0:00–0:09 | Q-SHIELD. One question, every outbreak season: which fields do you spray when you cannot spray them all? |
+| 2 | The problem | 0:09–0:29 | Fall Armyworm costs African agriculture up to 9.4 billion dollars a year. Sprays only work on young larvae. A village team can treat a few fields, in a few days. And the moths fly up to 40 kilometres a night. |
+| 3 | The insight | 0:29–0:48 | Today's rule: spray the worst fields first. Our plan makes one swap. Skip F9. Treat F4, the bridge between the hotspot and the healthy fields. Same four sprays. 16 percent less loss. Proven optimal against all 495 plans. |
+| 4 | Formulation | 0:48–1:03 | One qubit per field. The objective: direct loss, re-infestation between untreated neighbours, and chemical load. Re-infestation multiplies two decisions, so every spread link becomes a ZZ coupling. A natural QUBO. |
+| 5 | Quantum circuit | 1:03–1:25 | The spray budget is built into the circuit. A Dicke state holds every plan with exactly K sprays. The XY mixer moves sprays; it never adds one. Every shot is a valid plan. We train on CVaR: the best twenty percent of outcomes. |
+| 6 | Results | 1:25–1:41 | Textbook penalty QAOA wastes 28 percent of its shots and does no better than chance. Ours: 100 percent valid. The optimal plan in 505 of 4096 shots. 60 times better than random. |
+| 7 | Robustness | 1:41–1:55 | Across 12 villages, spraying the worst first loses up to 19 percent. Our best sample is optimal in 11 of 12, and at every spray budget we tested. |
+| 8 | Honest limits | 1:55–2:10 | The limits. No speed-up at 12 fields; classical search is instant. Hardware noise erodes the guarantee beyond 0.3 percent error. And the spread model still awaits field data. |
+| 9 | Close | 2:10–2:17 | Q-SHIELD. A real farming decision. A constraint-native quantum formulation. Fully reproducible. Thank you. |
 
 **Delivery tips:** pause for a beat on slide 3 so the two maps can sink in. Point your cursor at F9, then at F4. On slide 6 let the tall violet bar do the talking. Say slide 8 calmly and with confidence: judges reward honesty.
 
