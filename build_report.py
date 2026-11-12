@@ -15,7 +15,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(ROOT, "results")
 S = json.load(open(os.path.join(RES, "summary.json"), encoding="utf-8"))
 REPO = sys.argv[1] if len(sys.argv) > 1 else "<GitHub repository link>"
-VIDEO = sys.argv[2] if len(sys.argv) > 2 else "<3-minute video link>"
+VIDEO = sys.argv[2] if len(sys.argv) > 2 else ""
 PURPLE = RGBColor(0x69, 0x29, 0xC4)
 
 doc = Document()
@@ -122,7 +122,8 @@ t = para("Q-SHIELD", bold=True, size=28, align=WD_ALIGN_PARAGRAPH.CENTER, space_
 t.runs[0].font.color.rgb = PURPLE
 para("Quantum-assisted, network-aware containment of Fall Armyworm outbreaks "
      "with a constraint-preserving QAOA", size=13, align=WD_ALIGN_PARAGRAPH.CENTER, space_after=8)
-para(f"Code: {REPO}\nVideo: {VIDEO}", size=9.5, align=WD_ALIGN_PARAGRAPH.CENTER, space_after=12)
+_links = f"Code: {REPO}" + (f"\nVideo: {VIDEO}" if VIDEO.startswith("http") else "")
+para(_links, size=9.5, align=WD_ALIGN_PARAGRAPH.CENTER, space_after=12)
 
 doc.add_heading("Executive summary", level=1)
 para("When Fall Armyworm (FAW) breaks out in a cluster of smallholder maize fields, a village spray team can "
