@@ -4,3 +4,4 @@ __pycache__/
 results_log.txt
 .pytest_cache/
 results/quick/
+deck/node_modules/

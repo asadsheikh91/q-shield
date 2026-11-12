@@ -136,9 +136,10 @@ para(f"We formulate the choice of which **K** of **n** fields to treat as a cons
      f"(every plan that treats exactly K fields) and uses an **XY mixer** that never leaves the feasible set. "
      f"On a {n}-field / {n}-qubit test village with K = {K}:")
 bullets([
-    f"The exact optimum (certified by enumerating all {comb(n, K)} feasible plans) cuts expected cost by "
-    f"**{gap:.1f}%** versus spray-most-infested, i.e. **≈ USD {loss_saved:,.0f}** of maize saved in one control "
-    f"window for the same spray effort.",
+    f"The exact optimum (certified by enumerating all {comb(n, K)} feasible plans) cuts expected loss by "
+    f"**{100 * (1 - ex['cost'] / g1['cost']):.0f}%** versus spray-most-infested (equivalently, spray-most-infested "
+    f"loses {gap:.1f}% more), i.e. **≈ USD {loss_saved:,.0f}** of maize saved in one control window for the same "
+    f"spray effort.",
     f"Our XY-QAOA returns the certified optimum as its best sample; 100% of shots are feasible plans, and the "
     f"optimal plan is sampled **{best_xy['amplification']:.1f}×** more often than by uniform sampling of feasible plans "
     f"(p = {best_xy['p']}, {qs.get('objective', 'mean-energy')} objective).",

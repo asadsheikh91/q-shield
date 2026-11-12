@@ -1,6 +1,6 @@
 # Q-SHIELD: quantum-assisted, network-aware Fall Armyworm containment
 
-**Report:** [Q-SHIELD_Report.docx](Q-SHIELD_Report.docx) · **Video pitch:** _link coming_
+**Report:** [Q-SHIELD_Report.docx](Q-SHIELD_Report.docx) · **Pitch deck:** [Q-SHIELD_Pitch.pptx](Q-SHIELD_Pitch.pptx) (speaker notes = [script](PITCH_SCRIPT.md)) · **Video pitch:** _link coming_
 
 **Qiskit Fall Fest 2026 Hackathon · Domain 4: Agriculture**
 
@@ -46,6 +46,7 @@ python run_demo.py --quick       # fast check (~3-4 min) -> results/quick/
 python run_demo.py               # full results + all figures (~9 min) -> results/
 python make_architecture.py      # architecture diagram
 python build_report.py           # regenerates Q-SHIELD_Report.docx from results/summary.json
+# pitch deck (optional): cd deck && npm install && cd .. && node deck/build_deck.js && python deck/make_script.py
 ```
 Everything is seeded, so reruns reproduce `results/summary.json`.
 
